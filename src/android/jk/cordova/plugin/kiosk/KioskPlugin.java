@@ -52,16 +52,9 @@ public class KioskPlugin extends CordovaPlugin {
                 callbackContext.success();
                 return true;
             } else if (ENTER_KIOSK.equals(action)) {
-
-                //Intent intent = new Intent(Intent.ACTION_MAIN);
-                //intent.addCategory(Intent.CATEGORY_HOME);
+              
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.cordova.getActivity().getApplicationContext());
                 sp.edit().putBoolean(PREF_KIOSK_MODE, true).commit();
-
-                /*Intent chooser = Intent.createChooser(intent, "Select destination...");
-                if (intent.resolveActivity(cordova.getActivity().getPackageManager()) != null) {
-                    cordova.getActivity().startActivity(chooser);
-                }*/
 
                 callbackContext.success();
                 return true;
