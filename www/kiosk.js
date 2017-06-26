@@ -13,6 +13,10 @@ var KioskPlugin = (function() {
             exec(null, null, 'KioskPlugin', 'enterKiosk', []);
         },
 
+        startExternApp: function(package_name) {
+            exec(null, null, 'KioskPlugin', 'startExternApp', [package_name]);
+        },
+
         isInKiosk: function(callback) {
             if (/ios|iphone|ipod|ipad/i.test(navigator.userAgent)) {
                 callback(false); // ios not supported - cannot be in kiosk

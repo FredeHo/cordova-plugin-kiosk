@@ -32,6 +32,7 @@ import java.lang.reflect.Method;
 public class KioskActivity extends CordovaActivity {
 
     private static final String PREF_KIOSK_MODE = "pref_kiosk_mode";
+    private static final String ALLOW_APP_START = "allow_app_start";
     private static final int REQUEST_CODE = 123467;
     private static boolean inImmersiveSystemUiTransition = false;
     private static int immersiveSystemUiOptions = 0;
@@ -49,8 +50,10 @@ public class KioskActivity extends CordovaActivity {
     }
 
     protected void onStart() {
+        Log.d(TAG, "onStart");
         super.onStart();
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        sp.edit().putBoolean(ALLOW_APP_START, false).commit();
         if(Build.VERSION.SDK_INT >= 23) {
             sp.edit().putBoolean(PREF_KIOSK_MODE, false).commit();
             checkDrawOverlayPermission();
@@ -117,11 +120,13 @@ public class KioskActivity extends CordovaActivity {
     }
 
     protected void onStop() {
+        Log.d(TAG, "onStop");
         super.onStop();
         running = false;
     }
 
     public void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         super.init();
         loadUrl(launchUrl);
@@ -202,10 +207,24 @@ public class KioskActivity extends CordovaActivity {
         }
     }
 
+    public void onResume() {
+      Log.d(TAG, "onResume");
+      super.onResume();
+    }
+
     public void onPause()
     {
+        Log.d(TAG, "onPause");
         super.onPause();
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+
+        if(sp.getBoolean(ALLOW_APP_START, false)) {
+            Log.d(TAG, "App start allowed!");
+            return;
+        } else {
+            Log.d(TAG, "App start NOT allowed!");
+        }
+
         sp.edit().putBoolean(PREF_KIOSK_MODE, true).commit();
         if(!sp.getBoolean(PREF_KIOSK_MODE, false)) {
             return;
@@ -217,12 +236,13 @@ public class KioskActivity extends CordovaActivity {
         sendBroadcast(new Intent("android.intent.action.CLOSE_SYSTEM_DIALOGS"));
         collapseNotifications();
     }
-    
+
     @Override
     public void onDestroy() {
+        Log.d(TAG, "onDestroy");
         super.onDestroy();
         System.exit(0);
-    }    
+    }
 
     @Override
     public void onBackPressed() {
@@ -231,8 +251,24 @@ public class KioskActivity extends CordovaActivity {
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
+      Log.d(TAG, "onWindowFocusChanged(" + hasFocus + ")");
         super.onWindowFocusChanged(hasFocus);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+
+        if(!hasFocus) {
+          if(sp.getBoolean(ALLOW_APP_START, false)) {
+              Log.d(TAG, "App start allowed!");
+              return;
+          } else {
+              Log.d(TAG, "App start NOT allowed!");
+          }
+        } else {
+          if(sp.getBoolean(ALLOW_APP_START, false)) {
+            Log.d(TAG, "Reset App start variable.");
+            sp.edit().putBoolean(ALLOW_APP_START, false).commit();
+          }
+        }
+
         sp.edit().putBoolean(PREF_KIOSK_MODE, true).commit();
         if(!sp.getBoolean(PREF_KIOSK_MODE, false)) {
             return;
