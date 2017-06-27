@@ -30,7 +30,7 @@ import android.widget.ViewAnimator;
 import java.lang.reflect.Method;
 
 public class KioskActivity extends CordovaActivity {
-
+/*
     private static final String PREF_KIOSK_MODE = "pref_kiosk_mode";
     private static final String ALLOW_APP_START = "allow_app_start";
     private static final int REQUEST_CODE = 123467;
@@ -48,7 +48,7 @@ public class KioskActivity extends CordovaActivity {
     public ViewAnimator getViewAnimator() {
         return viewAnimator;
     }
-/*
+
     protected void onStart() {
         Log.d(TAG, "onStart");
         super.onStart();
