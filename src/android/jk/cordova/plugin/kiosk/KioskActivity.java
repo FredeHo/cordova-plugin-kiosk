@@ -48,7 +48,7 @@ public class KioskActivity extends CordovaActivity {
     public ViewAnimator getViewAnimator() {
         return viewAnimator;
     }
-
+/*
     protected void onStart() {
         Log.d(TAG, "onStart");
         super.onStart();
@@ -337,6 +337,6 @@ public class KioskActivity extends CordovaActivity {
         }
 
         appView.getView().requestFocusFromTouch();
-    }
+    }*/
 
 }
