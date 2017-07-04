@@ -30,7 +30,7 @@ import android.widget.ViewAnimator;
 import java.lang.reflect.Method;
 
 public class KioskActivity extends CordovaActivity {
-/*
+
     private static final String PREF_KIOSK_MODE = "pref_kiosk_mode";
     private static final String ALLOW_APP_START = "allow_app_start";
     private static final int REQUEST_CODE = 123467;
@@ -152,7 +152,7 @@ public class KioskActivity extends CordovaActivity {
 
         getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
             @Override
-            public void onSystemUiVisibilityChange(int visibility) {
+            public void onSystemUiVisibilityChange(int visibility) {/*
                 if (visibility == View.STATUS_BAR_VISIBLE) {
 
                     if (inImmersiveSystemUiTransition) {
@@ -174,7 +174,7 @@ public class KioskActivity extends CordovaActivity {
                     // Install Timeout that hides SystemUI after 1sec and hides overlay after 2secs.
                     setTimeout.postDelayed(runnableHideSystemUI, 1000);
 
-                }
+                }*/
             }
         });
 
@@ -216,7 +216,7 @@ public class KioskActivity extends CordovaActivity {
     {
         Log.d(TAG, "onPause");
         super.onPause();
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        /*SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
 
         if(sp.getBoolean(ALLOW_APP_START, false)) {
             Log.d(TAG, "App start allowed!");
@@ -234,7 +234,7 @@ public class KioskActivity extends CordovaActivity {
         }
         am.moveTaskToFront(getTaskId(), 1);
         sendBroadcast(new Intent("android.intent.action.CLOSE_SYSTEM_DIALOGS"));
-        collapseNotifications();
+        collapseNotifications();*/
     }
 
     @Override
@@ -253,7 +253,7 @@ public class KioskActivity extends CordovaActivity {
     public void onWindowFocusChanged(boolean hasFocus) {
       Log.d(TAG, "onWindowFocusChanged(" + hasFocus + ")");
         super.onWindowFocusChanged(hasFocus);
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        /*SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
 
         if(!hasFocus) {
           if(sp.getBoolean(ALLOW_APP_START, false)) {
@@ -299,7 +299,7 @@ public class KioskActivity extends CordovaActivity {
 
             // Overwrite Cordova's UI Visibility Options.
             getWindow().getDecorView().setSystemUiVisibility(immersiveSystemUiOptions);
-        }
+        }*/
     }
 
     //http://stackoverflow.com/questions/25284233/prevent-status-bar-for-appearing-android-modified?answertab=active#tab-top
@@ -337,6 +337,6 @@ public class KioskActivity extends CordovaActivity {
         }
 
         appView.getView().requestFocusFromTouch();
-    }*/
+    }
 
 }
